@@ -1,49 +1,46 @@
 #include <stdio.h>
+#include <stdlib.h>
 
-int ordenar(int valores[]) {
-    int i, j, aux;
+int comparaMaior(int a, int b) {
+    if (a > b)
+        return a;
+    else
+        return b;
+}
 
-    for (i = 0; i < 10; i++) {
-        for (j = i + 1; j < 10; j++) {
-
-            if (valores[i] > valores[j]) {
-                aux = valores[i];
-                valores[i] = valores[j];
-                valores[j] = aux;
-            }
-        }
-    }
-
-    return 0;
+int comparaMenor(int a, int b) {
+    if (a < b)
+        return a;
+    else
+        return b;
 }
 
 int main() {
 
-    int valores[10];
-    int i;
+    int val[10], i;
+    int maior, menor;
 
+    printf("Vamos ler os valores:\n");
 
     for (i = 0; i < 10; i++) {
-        printf("Digite o %d valor: ", i + 1);
-        scanf("%d", &valores[i]);
+        scanf("%d", &val[i]);
     }
 
-   
-    ordenar(valores);
+    maior = val[0];
 
-  
-    printf("\n5 menores valores:\n");
-
-    for (i = 0; i < 5; i++) {
-        printf("%d ", valores[i]);
+    for (i = 1; i < 5; i++) {
+        maior = comparaMaior(maior, val[i]);
     }
 
-    
-    printf("\n\n5 maiores valores:\n");
+    menor = val[5];
 
-    for (i = 5; i < 10; i++) {
-        printf("%d ", valores[i]);
+    for (i = 6; i < 10; i++) {
+        menor = comparaMenor(menor, val[i]);
     }
+
+    printf("\n");
+    printf("Maior dos 5 primeiros: %d", maior);
+    printf("\nMenor dos 5 ultimos: %d", menor);
 
     return 0;
 }
