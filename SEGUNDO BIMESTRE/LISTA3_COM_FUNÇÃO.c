@@ -1,0 +1,271 @@
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+
+#define PI 3.14159265
+
+// CALCULAR QUANTIDADE DE NOTAS
+int calcularNotas(int valor, int nota) {
+    int quantidade;
+
+    quantidade = valor / nota;
+
+    return quantidade;
+}
+
+//  CALCULAR INSS
+float calcinss(float sal) {
+    if (sal <= 1412.00) {
+        return sal * 0.075;
+    }
+    else if (sal <= 2666.68) {
+        return sal * 0.09;
+    }
+    else if (sal <= 4000.03) {
+        return sal * 0.12;
+    }
+    else {
+        return sal * 0.14;
+    }
+}
+
+//  CALCULAR IRPF
+float calcularIRPF(double salarioBase) {
+    double imposto = 0;
+
+    if (salarioBase <= 2259.20) {
+        imposto = 0;
+    }
+    else if (salarioBase <= 2826.65) {
+        imposto = (salarioBase * 0.075) - 169.44;
+    }
+    else if (salarioBase <= 3751.05) {
+        imposto = (salarioBase * 0.15) - 381.44;
+    }
+    else if (salarioBase <= 4664.68) {
+        imposto = (salarioBase * 0.225) - 662.77;
+    }
+    else {
+        imposto = (salarioBase * 0.275) - 896.00;
+    }
+
+    return imposto;
+}
+
+int main() {
+    int escolha;
+
+    printf("=================================================\n");
+    printf("=================================================\n");
+    printf("                  EXERCICIOS LISTA 3\n");
+    printf("=================================================\n");
+    printf("=================================================\n");
+
+    printf("1) Terminal Infinity Cash\n");
+    printf("2) Operacao ENIAC - Trajetoria\n");
+    printf("3) Calculo de INSS\n");
+    printf("4) Calculo de IRPF\n");
+    printf("5) Emissao de Contra-cheque\n\n");
+
+    printf("Digite o numero do exercicio que deseja resolver: ");
+    scanf("%d", &escolha);
+
+    system("cls");
+
+    switch(escolha) {
+
+        // QUESTAO 1
+        case 1: {
+            int n100, n50, n10, n5, n2, n1;
+            int valor, original;
+
+            printf("=== Saque Bancario ===\n\n");
+
+            printf("Informe o valor para o saque: R$ ");
+            scanf("%d", &valor);
+
+            if (valor <= 0) {
+                printf("Valor invalido!\n");
+                break;
+            }
+
+            original = valor;
+
+     
+            n100 = calcularNotas(valor, 100);
+            valor = valor % 100;
+
+            n50 = calcularNotas(valor, 50);
+            valor = valor % 50;
+
+            n10 = calcularNotas(valor, 10);
+            valor = valor % 10;
+
+            n5 = calcularNotas(valor, 5);
+            valor = valor % 5;
+
+            n2 = calcularNotas(valor, 2);
+            valor = valor % 2;
+
+            n1 = valor;
+
+            printf("\nValor R$ %d", original);
+            printf("\n%d notas de R$ 100", n100);
+            printf("\n%d notas de R$ 50", n50);
+            printf("\n%d notas de R$ 10", n10);
+            printf("\n%d notas de R$ 5", n5);
+            printf("\n%d notas de R$ 2", n2);
+            printf("\n%d notas de R$ 1\n", n1);
+
+            break;
+        }
+
+        // QUESTAO 2
+        case 2: {
+            float v0, angulo_graus;
+
+            const float g = 9.8f;
+            const float k = 0.5f;
+            const float dt = 0.01f;
+
+            float x = 0.0f;
+            float y = 0.0f;
+            float tempo = 0.0f;
+            float rad, vx, vy, ax, ay;
+
+            printf("=== Operacao ENIAC - Trajetoria ===\n\n");
+
+            printf("Digite a Velocidade Inicial (v0): ");
+            scanf("%f", &v0);
+
+            printf("Digite o Angulo em graus (theta): ");
+            scanf("%f", &angulo_graus);
+
+            if (v0 <= 0 || angulo_graus <= 0 || angulo_graus >= 90) {
+                printf("Valores invalidos!\n");
+                break;
+            }
+
+            rad = angulo_graus * (PI / 180.0f);
+
+            vx = v0 * cos(rad);
+            vy = v0 * sin(rad);
+
+            do {
+                ax = -k * vx;
+                ay = -g - k * vy;
+
+                vx = vx + ax * dt;
+                vy = vy + ay * dt;
+
+                x = x + vx * dt;
+                y = y + vy * dt;
+
+                tempo = tempo + dt;
+
+            } while (y > 0.0f);
+
+            printf("\n=== RESULTADO DA SIMULACAO ENIAC ===\n");
+            printf("Alcance Maximo (x): %.2f metros\n", x);
+            printf("Tempo de Voo: %.2f segundos\n", tempo);
+
+            break;
+        }
+
+        // QUESTAO 3 
+        case 3: {
+            float salbruto, Inss;
+
+            printf("=== Calculo de INSS ===\n\n");
+
+            printf("Informe o Valor do Salario Bruto: ");
+            scanf("%f", &salbruto);
+
+            if (salbruto < 0) {
+                printf("Salario invalido!\n");
+                break;
+            }
+
+            // Chamando a funcao
+            Inss = calcinss(salbruto);
+
+            printf("\nO valor do INSS e: R$ %.2f\n", Inss);
+
+            break;
+        }
+
+        // QUESTAO 4
+        case 4: {
+            float sal, impostos;
+
+            printf("=== Calculo de IRPF ===\n\n");
+
+            printf("Informe o valor do salario: ");
+            scanf("%f", &sal);
+
+            if (sal < 0) {
+                printf("Salario invalido!\n");
+                break;
+            }
+
+            // Chamando a funcao
+            impostos = calcularIRPF(sal);
+
+            printf("\nIRPF: R$ %.2f\n", impostos);
+
+            break;
+        }
+
+        // QUESTAO 5
+        case 5: {
+            float valorh, salarioBruto;
+            float IRPF, INSS, salarioliquido;
+            int horas;
+
+            printf("=== Calculo do CONTRA-CHEQUE ===\n\n");
+
+            printf("Informe a quantidade de Horas trabalhadas e o Valor da hora:\n");
+
+            printf("\nHoras trabalhadas: ");
+            scanf("%d", &horas);
+
+            printf("Valor da Hora: R$ ");
+            scanf("%f", &valorh);
+
+            if (horas < 0 || valorh < 0) {
+                printf("Valores invalidos!\n");
+                break;
+            }
+
+            salarioBruto = horas * valorh;
+
+            // Chamando as funcoes de INSS e IRPF
+            INSS = calcinss(salarioBruto);
+            IRPF = calcularIRPF(salarioBruto - INSS);
+
+            salarioliquido = salarioBruto - (IRPF + INSS);
+
+            system("cls");
+
+            printf("======================================================\n");
+            printf("    RECIBO DE PAGAMENTO DE SALARIO (CONTRA-CHEQUE)\n");
+            printf("======================================================\n");
+
+            printf("Salario Bruto (Horas x Valor): R$ %.2f\n", salarioBruto);
+            printf("(-) Desconto INSS:             R$ %.2f\n", INSS);
+            printf("(-) Desconto IRPF:             R$ %.2f\n", IRPF);
+            printf("------------------------------------------------------\n");
+            printf("LIQUIDO A RECEBER:             R$ %.2f\n", salarioliquido);
+            printf("======================================================\n");
+
+            break;
+        }
+
+        default:
+            printf("Opcao invalida!\n");
+            break;
+    }
+
+    return 0;
+}
