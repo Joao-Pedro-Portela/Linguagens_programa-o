@@ -15,7 +15,7 @@ int main(int argc, char *argv[]) {
 	
 	area = (base * altura)/2;
 	
-	printf("A área do Triangulo Retangulo da Base = %d e Altura = %d é %f", base, altura, area);
+	printf("A Ã¡rea do Triangulo Retangulo da Base = %d e Altura = %d Ã© %f", base, altura, area);
 	
 	return 0;
 }
